@@ -1,21 +1,71 @@
-import { ArrowLeft, ArrowRight, Facebook, Instagram, MapPin, MessageCircle, Phone, X } from "lucide-react";
+import { ArrowRight, BookOpen, Building, Facebook, GraduationCap, Instagram, Landmark, MapPin, MessageCircle, Palette, Phone, Trophy, Users } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { CourseCard } from "../components/CourseCard";
+import { ExpandingCards, type CardItem } from "../components/ui/expanding-cards";
 import { collegeConfig } from "../data/config";
 import { courses } from "../data/courses";
 import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
 const admissionPreview = ["Discover Your Course", "Counselling & Verification", "Confirm Your Admission"];
-const galleryItems = [
-  { id: 1, category: "Campus Life", title: "Everyday moments at DC", image: "/images/students/campus%20life.png" },
-  { id: 2, category: "Classroom Learning", title: "Learning together", image: "/images/students/classg.png" },
-  { id: 3, category: "Cultural Fest", title: "Celebrate talent and culture", image: "/images/students/cultural.png" },
-  { id: 4, category: "Graduation", title: "A milestone worth celebrating", image: "/images/students/graduation3.png" },
-  { id: 5, category: "Seminar", title: "Ideas beyond the classroom", image: "/images/students/seminars.png" },
-  { id: 6, category: "Sports", title: "Play. Compete. Grow.", image: "/images/students/sports.png" },
-  { id: 7, category: "Student Clubs", title: "Find your community", image: "/images/students/student_club.png" }
+const galleryItems: CardItem[] = [
+  {
+    id: "campus-life",
+    title: "Everyday moments at DC",
+    description: "Campus days shaped by friendships, learning spaces and everyday college life.",
+    imgSrc: "/images/students/campus%20life.png",
+    icon: <Building size={24} />,
+    linkHref: "/life-at-dc"
+  },
+  {
+    id: "classroom-learning",
+    title: "Learning together",
+    description: "Classroom conversations, peer learning and faculty guidance in motion.",
+    imgSrc: "/images/students/classg.png",
+    icon: <BookOpen size={24} />,
+    linkHref: "/life-at-dc"
+  },
+  {
+    id: "cultural-fest",
+    title: "Celebrate talent and culture",
+    description: "Student creativity, performance and campus energy during cultural moments.",
+    imgSrc: "/images/students/cultural.png",
+    icon: <Palette size={24} />,
+    linkHref: "/life-at-dc"
+  },
+  {
+    id: "graduation",
+    title: "A milestone worth celebrating",
+    description: "A proud academic milestone that marks confidence, growth and achievement.",
+    imgSrc: "/images/students/graduation3.png",
+    icon: <GraduationCap size={24} />,
+    linkHref: "/life-at-dc"
+  },
+  {
+    id: "seminar",
+    title: "Ideas beyond the classroom",
+    description: "Seminars and academic sessions that connect learning with real-world thinking.",
+    imgSrc: "/images/students/seminars.png",
+    icon: <Landmark size={24} />,
+    linkHref: "/life-at-dc"
+  },
+  {
+    id: "sports",
+    title: "Play. Compete. Grow.",
+    description: "Sports and movement that build teamwork, discipline and campus spirit.",
+    imgSrc: "/images/students/sports.png",
+    icon: <Trophy size={24} />,
+    linkHref: "/life-at-dc"
+  },
+  {
+    id: "student-clubs",
+    title: "Find your community",
+    description: "Student groups and shared interests that make college feel connected.",
+    imgSrc: "/images/students/student_club.png",
+    icon: <Users size={24} />,
+    linkHref: "/life-at-dc"
+  }
 ];
 const whyDCStats = [
   {
@@ -139,125 +189,20 @@ function BeforeAfter() {
 }
 
 function CampusGallery() {
-  const [active, setActive] = useState(2);
-  const [lightbox, setLightbox] = useState(false);
-  const [dragStart, setDragStart] = useState<number | null>(null);
-  const total = galleryItems.length;
-  const current = galleryItems[active];
-  const go = (direction: number) => setActive((value) => (value + direction + total) % total);
-  const relativePosition = (index: number) => {
-    const raw = index - active;
-    if (raw > total / 2) return raw - total;
-    if (raw < -total / 2) return raw + total;
-    return raw;
-  };
-  const slotName = (offset: number) => {
-    if (offset === -2) return "slot-far-left";
-    if (offset === -1) return "slot-left";
-    if (offset === 0) return "slot-center";
-    if (offset === 1) return "slot-right";
-    if (offset === 2) return "slot-far-right";
-    return "slot-hidden";
-  };
-
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      if (!lightbox) return;
-      if (event.key === "ArrowLeft") go(-1);
-      if (event.key === "ArrowRight") go(1);
-      if (event.key === "Escape") setLightbox(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [lightbox]);
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || lightbox) return;
-    const rotation = window.setInterval(() => go(1), 4200);
-    return () => window.clearInterval(rotation);
-  }, [lightbox]);
-
-  const endDrag = (clientX: number) => {
-    if (dragStart === null) return;
-    const delta = clientX - dragStart;
-    if (Math.abs(delta) > 60) go(delta < 0 ? 1 : -1);
-    setDragStart(null);
-    return Math.abs(delta);
-  };
-
   return <section className="campus-gallery-section">
     <div className="campus-gallery-header">
       <div>
         <p className="campus-gallery-label">05 &mdash; Gallery</p>
         <h2>Life at DC, frame by frame.</h2>
       </div>
-      <p className="campus-gallery-intro">Click any moment to bring it into focus.</p>
-      <div className="campus-gallery-actions">
-        <button type="button" aria-label="Previous gallery moment" onClick={() => go(-1)}><ArrowLeft size={17} /></button>
-        <button type="button" aria-label="Next gallery moment" onClick={() => go(1)}><ArrowRight size={17} /></button>
-      </div>
+      <p className="campus-gallery-intro">Hover or focus a moment to reveal the story behind it.</p>
     </div>
-    <div
-      className={`campus-gallery-carousel ${dragStart !== null ? "is-dragging" : ""}`}
-      tabIndex={0}
-      data-gallery-root="true"
-      onKeyDown={(event) => {
-        if (event.key === "ArrowLeft") go(-1);
-        if (event.key === "ArrowRight") go(1);
-      }}
-      onPointerCancel={() => setDragStart(null)}
-      onLostPointerCapture={() => setDragStart(null)}
-    >
-      {galleryItems.map((item) => {
-        const offset = relativePosition(item.id - 1);
-        const visible = Math.abs(offset) <= 2;
-        return <button
-          className={`campus-gallery-slide ${slotName(offset)} ${offset === 0 ? "is-active" : ""}`}
-          type="button"
-          key={item.id}
-          style={{ display: visible ? "block" : "none" }}
-          onPointerDown={(event) => {
-            setDragStart(event.clientX);
-            event.currentTarget.setPointerCapture(event.pointerId);
-          }}
-          onPointerUp={(event) => {
-            const distance = endDrag(event.clientX) ?? 0;
-            if (distance > 8) return;
-            offset === 0 ? setLightbox(true) : setActive(item.id - 1);
-          }}
-          onKeyDown={(event) => {
-            if (event.key !== "Enter" && event.key !== " ") return;
-            event.preventDefault();
-            offset === 0 ? setLightbox(true) : setActive(item.id - 1);
-          }}
-          aria-label={offset === 0 ? `Open ${item.title}` : `Make ${item.title} the active gallery moment`}
-        >
-          <img src={item.image} alt={item.title} draggable={false} />
-          {offset === 0 && <span className="campus-gallery-overlay">
-            <span className="campus-gallery-copy">
-              <span>{item.category} / 2026</span>
-              <strong>{offset === 0 ? "Moments that shape the DC experience" : item.title}</strong>
-              <em>DC College / Visakhapatnam</em>
-            </span>
-            <span className="campus-gallery-cta">View Moment <ArrowRight size={14} /></span>
-          </span>}
-        </button>;
-      })}
-    </div>
-    <div className="campus-gallery-progress">
-      <span>{String(active + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
-      <div><span style={{ width: `${((active + 1) / total) * 100}%` }} /></div>
-      <span>05 - Campus Moments</span>
-    </div>
-    {lightbox && <div className="campus-gallery-lightbox" role="dialog" aria-modal="true" aria-label="Gallery viewer">
-      <button type="button" className="campus-gallery-close" aria-label="Close gallery" onClick={() => setLightbox(false)}><X size={20} /></button>
-      <button type="button" className="campus-gallery-light-nav left" aria-label="Previous image" onClick={() => go(-1)}><ArrowLeft /></button>
-      <figure>
-        <img src={current.image} alt={current.title} />
-        <figcaption><span>{current.category}</span>{current.title}</figcaption>
-      </figure>
-      <button type="button" className="campus-gallery-light-nav right" aria-label="Next image" onClick={() => go(1)}><ArrowRight /></button>
-    </div>}
+    <ExpandingCards
+      className="campus-expanding-cards"
+      items={galleryItems}
+      defaultActiveIndex={2}
+      aria-label="DC College campus gallery moments"
+    />
   </section>;
 }
 
