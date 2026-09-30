@@ -195,7 +195,6 @@ function CampusGallery() {
         <p className="campus-gallery-label">05 &mdash; Gallery</p>
         <h2>Life at DC, frame by frame.</h2>
       </div>
-      <p className="campus-gallery-intro">Hover or focus a moment to reveal the story behind it.</p>
     </div>
     <ExpandingCards
       className="campus-expanding-cards"
@@ -376,11 +375,11 @@ export default function Home({ openEnquiry }: { openEnquiry: (course?: string) =
         </div>
       </div>
       <nav className="home-quick-links" aria-label="Quick links">
-        <a href={`https://wa.me/${collegeConfig.whatsapp}`} aria-label="WhatsApp"><MessageCircle size={17} /><span>WhatsApp</span></a>
-        <a href={collegeConfig.facebook} aria-label="Facebook"><Facebook size={17} /><span>Facebook</span></a>
-        <a href={collegeConfig.instagram} aria-label="Instagram"><Instagram size={17} /><span>Instagram</span></a>
-        <a href={collegeConfig.phoneHref} aria-label="Contact DC College"><Phone size={17} /><span>Contact</span></a>
-        <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(collegeConfig.mapQuery)}`} target="_blank" rel="noreferrer" aria-label="DC College address"><MapPin size={17} /><span>Address</span></a>
+        <a href={`https://wa.me/${collegeConfig.whatsapp}`} aria-label="WhatsApp" data-social="whatsapp"><MessageCircle size={17} /><span>WhatsApp</span></a>
+        <a href={collegeConfig.facebook} aria-label="Facebook" data-social="facebook"><Facebook size={17} /><span>Facebook</span></a>
+        <a href={collegeConfig.instagram} aria-label="Instagram" data-social="instagram"><Instagram size={17} /><span>Instagram</span></a>
+        <a href={collegeConfig.phoneHref} aria-label="Contact DC College" data-social="phone"><Phone size={17} /><span>Contact</span></a>
+        <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(collegeConfig.mapQuery)}`} target="_blank" rel="noreferrer" aria-label="DC College address" data-social="map"><MapPin size={17} /><span>Address</span></a>
       </nav>
     </section>
     <section className="home-intro-section">
