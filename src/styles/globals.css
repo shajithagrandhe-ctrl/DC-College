@@ -1713,3 +1713,11 @@ body,.page,.home-intro-section,.home-courses-section,.why-dc-section,.graduation
 /* Match enquiry/submit buttons to the transparent hero CTA style. */
 .site-header-cta,.site-mobile-cta,.home-admissions-link,.home-enquiry-primary,.home-enquiry-secondary,.home-enquiry-submit,.contact-submit,.admissions-link{border-color:rgba(255,255,255,.9)!important;background:transparent!important;color:#fff!important;font-weight:600!important;box-shadow:none!important}
 .site-header-cta:hover,.site-mobile-cta:hover,.home-admissions-link:hover,.home-enquiry-primary:hover,.home-enquiry-secondary:hover,.home-enquiry-submit:hover,.contact-submit:hover,.admissions-link:hover{border-color:#fff!important;background:rgba(255,255,255,.12)!important;color:#fff!important}
+
+/* Final requested adjustments: white background, dimmer hero video, clearer nav buttons. */
+body,.page,.home-intro-section,.home-courses-section,.why-dc-section,.graduation-section,.campus-gallery-section,.home-admissions-preview{background:#FFFFFF!important}
+.home-hero-video{opacity:.78!important}
+.site-header .pearl-nav-button{background:rgba(18,18,18,.72)!important;box-shadow:inset 0 .16rem .44rem rgba(255,255,255,.18),inset 0 -.22rem .52rem rgba(0,0,0,.48),0 .55rem 1rem rgba(0,0,0,.22)!important}
+.site-header .pearl-nav-button:hover{background:rgba(32,32,32,.86)!important}
+.site-header .pearl-nav-button.active{background:rgba(0,0,0,.92)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.42),inset 0 .16rem .44rem rgba(255,255,255,.22),0 .65rem 1.2rem rgba(0,0,0,.28)!important}
+.site-header .pearl-nav-button.active .wrap{color:#FFFFFF!important}
